@@ -124,9 +124,74 @@
             position: relative;
             z-index: 1;
         }
+
+        /* Balloon Styles */
+        .balloon {
+            position: fixed;
+            width: 50px;
+            height: 65px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 999;
+            pointer-events: auto;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .balloon:hover {
+            transform: scale(1.1);
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px;
+            background: rgba(100, 100, 100, 0.3);
+        }
+
+        .balloon.popping {
+            animation: pop 0.3s ease forwards;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px);
+            }
+            25% {
+                transform: translateY(-20px) translateX(10px);
+            }
+            50% {
+                transform: translateY(-10px) translateX(-10px);
+            }
+            75% {
+                transform: translateY(-25px) translateX(5px);
+            }
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.3);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen">
+    <!-- Balloon Container -->
+    <div id="balloon-container"></div>
+
     <!-- Header Section -->
     <header class="relative py-20 px-4 text-center">
         <div class="absolute inset-0 bg-cover bg-center opacity-20" style="background-image: url('https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?auto=format&fit=crop')"></div>
@@ -166,7 +231,7 @@
                                 Many other Islamic mathematicians like Omar Khayyam continued to improve algebra.
                                 These discoveries helped lead to calculus and the advanced math we use in the modern world.
                             </p>
-                            <div class="bg-amber-50 p-5 rounded-lg border border-amber-200 mt-6">
+                            <div class="bg-amber-50 p-5 rounded-lg border border-amber-200 mt-6 scroll-reveal">
                                 <h3 class="font-bold text-amber-900 mb-3 text-lg">
                                     <i class="fas fa-laptop-code mr-2 text-amber-600"></i>Modern Impact: Algebra in Your Daily Life
                                 </h3>
@@ -181,7 +246,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="flex justify-center">
+                        <div class="flex justify-center scroll-reveal-scale">
                             <img src="https://www.truth-seeker.info/wp-content/uploads/2013/02/geometry.jpg"
                                  alt="Ancient Arabic algebra manuscript from the Islamic Golden Age"
                                  class="rounded-xl w-full h-64 md:h-80 object-cover shadow-md">
@@ -217,7 +282,7 @@
                                 Islamic doctors also taught that diet, cleanliness, and mental health were important for healing—ideas
                                 that are still basic parts of medicine today.
                             </p>
-                            <div class="bg-rose-50 p-5 rounded-lg border border-rose-200 mt-6">
+                            <div class="bg-rose-50 p-5 rounded-lg border border-rose-200 mt-6 scroll-reveal">
                                 <h3 class="font-bold text-rose-900 mb-3 text-lg">
                                     <i class="fas fa-hospital mr-2 text-rose-600"></i>Modern Impact: Medicine in Your Daily Life
                                 </h3>
@@ -232,7 +297,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="flex justify-center md:order-1">
+                        <div class="flex justify-center md:order-1 scroll-reveal-scale">
                             <img src="https://images.pexels.com/photos/4047074/pexels-photo-4047074.jpeg?auto=compress&cs=tinysrgb&w=800"
                                  alt="Ancient Islamic medical manuscript and texts"
                                  class="rounded-xl w-full h-64 md:h-80 object-cover shadow-md">
@@ -268,7 +333,7 @@
                                 These models were later used by Copernicus. Their work saved ancient knowledge and
                                 added new ways of studying space that helped start the Scientific Revolution.
                             </p>
-                            <div class="bg-indigo-50 p-5 rounded-lg border border-indigo-200 mt-6">
+                            <div class="bg-indigo-50 p-5 rounded-lg border border-indigo-200 mt-6 scroll-reveal">
                                 <h3 class="font-bold text-indigo-900 mb-3 text-lg">
                                     <i class="fas fa-satellite mr-2 text-indigo-600"></i>Modern Impact: Astronomy in Your Daily Life
                                 </h3>
@@ -286,7 +351,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="flex justify-center">
+                        <div class="flex justify-center scroll-reveal-scale">
                             <img src="https://images.pexels.com/photos/1169754/pexels-photo-1169754.jpeg?auto=compress&cs=tinysrgb&w=800"
                                  alt="Night sky with stars and celestial objects"
                                  class="rounded-xl w-full h-64 md:h-80 object-cover shadow-md">
@@ -304,31 +369,31 @@
                         <h2 class="text-3xl text-blue-900 font-bold">Historical Timeline of the Islamic Golden Age</h2>
                     </div>
                     <div class="space-y-6">
-                        <div class="border-l-4 border-blue-400 pl-6 pb-4">
+                        <div class="border-l-4 border-blue-400 pl-6 pb-4 scroll-reveal-left">
                             <h3 class="text-xl font-bold text-blue-800 mb-2">750 CE - The Abbasid Caliphate</h3>
                             <p class="text-gray-700">The Abbasid dynasty takes over and makes Baghdad the new capital city. This is the start of the Islamic Golden Age, a time when learning and education became very important.</p>
                         </div>
-                        <div class="border-l-4 border-blue-400 pl-6 pb-4">
+                        <div class="border-l-4 border-blue-400 pl-6 pb-4 scroll-reveal-left">
                             <h3 class="text-xl font-bold text-blue-800 mb-2">762 CE - Foundation of Baghdad</h3>
                             <p class="text-gray-700">Caliph Al-Mansur builds the city of Baghdad. It quickly becomes the center of learning and culture in the Islamic world, bringing in scholars and thinkers from everywhere.</p>
                         </div>
-                        <div class="border-l-4 border-blue-400 pl-6 pb-4">
+                        <div class="border-l-4 border-blue-400 pl-6 pb-4 scroll-reveal-left">
                             <h3 class="text-xl font-bold text-blue-800 mb-2">813-833 CE - House of Wisdom Era</h3>
                             <p class="text-gray-700">Under Caliph Al-Ma'mun, the House of Wisdom (Bayt al-Hikma) becomes a major learning center. Scholars translate Greek, Persian, and Indian books into Arabic and do new research.</p>
                         </div>
-                        <div class="border-l-4 border-blue-400 pl-6 pb-4">
+                        <div class="border-l-4 border-blue-400 pl-6 pb-4 scroll-reveal-left">
                             <h3 class="text-xl font-bold text-blue-800 mb-2">820 CE - Al-Khwarizmi's Work</h3>
                             <p class="text-gray-700">Muhammad ibn Musa al-Khwarizmi writes his famous book on algebra, completely changing mathematics by showing step-by-step ways to solve equations.</p>
                         </div>
-                        <div class="border-l-4 border-blue-400 pl-6 pb-4">
+                        <div class="border-l-4 border-blue-400 pl-6 pb-4 scroll-reveal-left">
                             <h3 class="text-xl font-bold text-blue-800 mb-2">1025 CE - The Canon of Medicine</h3>
                             <p class="text-gray-700">Ibn Sina (Avicenna) finishes "The Canon of Medicine," a complete medical encyclopedia that becomes the standard medical textbook for hundreds of years in both the Islamic world and Europe.</p>
                         </div>
-                        <div class="border-l-4 border-blue-400 pl-6 pb-4">
+                        <div class="border-l-4 border-blue-400 pl-6 pb-4 scroll-reveal-left">
                             <h3 class="text-xl font-bold text-blue-800 mb-2">1070 CE - Rise of Seljuk Madrasas</h3>
                             <p class="text-gray-700">The Nizamiyya madrasas are built, creating a network of schools for higher education across the Islamic world.</p>
                         </div>
-                        <div class="border-l-4 border-blue-400 pl-6 pb-4">
+                        <div class="border-l-4 border-blue-400 pl-6 pb-4 scroll-reveal-left">
                             <h3 class="text-xl font-bold text-blue-800 mb-2">1258 CE - Mongol Invasion</h3>
                             <p class="text-gray-700">The Mongol attack on Baghdad destroys the city and ends the Abbasid Caliphate. While this is usually considered the end of the Golden Age, Islamic learning continues in other cities like Cairo, Cordoba, and later in the Ottoman Empire.</p>
                         </div>
@@ -491,7 +556,85 @@
         document.addEventListener('DOMContentLoaded', () => {
             const scrollElements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale');
             scrollElements.forEach(el => observer.observe(el));
+
+            // Initialize balloons
+            initializeBalloons();
         });
+
+        // Balloon System
+        const balloonColors = [
+            '#FF6B9D', // Pink
+            '#4ECDC4', // Teal
+            '#FFD93D', // Yellow
+            '#95E1D3', // Mint
+            '#FF8C42', // Orange
+            '#A8E6CF', // Light Green
+            '#C7CEEA', // Lavender
+            '#FFB6B9'  // Light Pink
+        ];
+
+        function createBalloon() {
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon';
+
+            // Random color
+            const color = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+            balloon.style.background = `linear-gradient(135deg, ${color} 0%, ${color}dd 100%)`;
+
+            // Position balloons in safe zones (edges of screen, avoiding center content)
+            const safeZones = [
+                { left: '5%', top: '20%' },
+                { left: '90%', top: '15%' },
+                { left: '8%', top: '50%' },
+                { left: '88%', top: '55%' },
+                { left: '10%', top: '75%' },
+                { left: '85%', top: '80%' },
+                { left: '7%', top: '35%' },
+                { left: '92%', top: '40%' }
+            ];
+
+            const position = safeZones[Math.floor(Math.random() * safeZones.length)];
+            balloon.style.left = position.left;
+            balloon.style.top = position.top;
+
+            // Random animation delay
+            balloon.style.animationDelay = `${Math.random() * 2}s`;
+
+            // Click to pop
+            balloon.addEventListener('click', function(e) {
+                e.stopPropagation();
+                popBalloon(balloon);
+            });
+
+            return balloon;
+        }
+
+        function popBalloon(balloon) {
+            balloon.classList.add('popping');
+
+            // Remove after animation
+            setTimeout(() => {
+                balloon.remove();
+
+                // Respawn after 10 seconds
+                setTimeout(() => {
+                    const newBalloon = createBalloon();
+                    document.getElementById('balloon-container').appendChild(newBalloon);
+                }, 10000);
+            }, 300);
+        }
+
+        function initializeBalloons() {
+            const container = document.getElementById('balloon-container');
+
+            // Create initial balloons (6 balloons)
+            for (let i = 0; i < 6; i++) {
+                setTimeout(() => {
+                    const balloon = createBalloon();
+                    container.appendChild(balloon);
+                }, i * 500); // Stagger creation
+            }
+        }
     </script>
 </body>
 </html>
