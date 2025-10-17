@@ -30,30 +30,99 @@
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap');
-        
+
         body {
             font-family: 'Open Sans', sans-serif;
-            background: linear-gradient(to bottom, #fffbeb, #cffafe);
+            background:
+                linear-gradient(135deg, rgba(255, 251, 235, 0.9) 0%, rgba(254, 243, 199, 0.9) 25%, rgba(207, 250, 254, 0.9) 75%, rgba(186, 230, 253, 0.9) 100%),
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(217, 119, 6, 0.03) 35px, rgba(217, 119, 6, 0.03) 70px);
+            background-attachment: fixed;
+            position: relative;
         }
-        
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(251, 191, 36, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(251, 146, 60, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
         h1, h2, h3 {
             font-family: 'Playfair Display', serif;
         }
-        
+
         .section-icon {
             transition: transform 0.3s ease;
         }
-        
+
         .section-icon:hover {
             transform: scale(1.1);
         }
-        
+
         .source-link {
             transition: all 0.2s ease;
         }
-        
+
         .source-link:hover {
             transform: translateX(5px);
+        }
+
+        /* Scroll Animation Styles */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scroll-reveal-left.revealed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scroll-reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scroll-reveal-right.revealed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scroll-reveal-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scroll-reveal-scale.revealed {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        header, main, section, footer {
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
@@ -74,7 +143,7 @@
 
     <main class="max-w-6xl mx-auto px-4 py-12 space-y-16">
         <!-- Algebra Section -->
-        <section>
+        <section class="scroll-reveal">
             <div class="border-2 border-amber-200 bg-white/80 backdrop-blur-sm shadow-lg rounded-xl overflow-hidden">
                 <div class="p-6 md:p-8">
                     <div class="flex items-center gap-3 mb-6">
@@ -123,7 +192,7 @@
         </section>
 
         <!-- Medicine Section -->
-        <section>
+        <section class="scroll-reveal">
             <div class="border-2 border-rose-200 bg-white/80 backdrop-blur-sm shadow-lg rounded-xl overflow-hidden">
                 <div class="p-6 md:p-8">
                     <div class="flex items-center gap-3 mb-6">
@@ -174,7 +243,7 @@
         </section>
 
         <!-- Astronomy Section -->
-        <section>
+        <section class="scroll-reveal">
             <div class="border-2 border-indigo-200 bg-white/80 backdrop-blur-sm shadow-lg rounded-xl overflow-hidden">
                 <div class="p-6 md:p-8">
                     <div class="flex items-center gap-3 mb-6">
@@ -227,7 +296,7 @@
             </div>
         </section>
         <!-- Historical Timeline Section -->
-        <section>
+        <section class="scroll-reveal">
             <div class="border-2 border-blue-200 bg-white/80 backdrop-blur-sm shadow-lg rounded-xl overflow-hidden">
                 <div class="p-6 md:p-8">
                     <div class="flex items-center gap-3 mb-6">
@@ -269,7 +338,7 @@
         </section>
 
         <!-- Enduring Impact Section -->
-        <section>
+        <section class="scroll-reveal">
             <div class="border-2 border-teal-200 bg-white/80 backdrop-blur-sm shadow-lg rounded-xl overflow-hidden">
                 <div class="p-6 md:p-8">
                     <div class="flex items-center gap-3 mb-6">
@@ -343,7 +412,7 @@
     </main>
 
     <!-- Sources Section -->
-    <section class="max-w-4xl mx-auto px-4 py-12">
+    <section class="max-w-4xl mx-auto px-4 py-12 scroll-reveal">
         <div class="border-2 border-emerald-200 bg-white/80 backdrop-blur-sm shadow-lg rounded-xl overflow-hidden">
             <div class="p-6 md:p-8">
                 <h2 class="text-3xl text-emerald-900 font-bold mb-6">Sources & Further Reading</h2>
@@ -403,6 +472,26 @@
     <script>
         // Set current year in footer
         document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all scroll-reveal elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const scrollElements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale');
+            scrollElements.forEach(el => observer.observe(el));
+        });
     </script>
 </body>
 </html>
